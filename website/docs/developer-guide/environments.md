@@ -464,7 +464,7 @@ YAML values override `config_init()` defaults. CLI arguments override YAML value
 ```bash
 python my_env.py evaluate \
     --config my_config.yaml \
-    --openai.model_name anthropic/claude-opus-4.6  # overrides YAML
+    --openai.model_name anthropic/claude-sonnet-4.6  # overrides YAML
 ```
 
 ## Prerequisites

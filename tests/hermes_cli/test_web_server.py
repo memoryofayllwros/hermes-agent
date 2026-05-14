@@ -1054,13 +1054,13 @@ class TestModelContextLength:
 
         cfg = {
             "model": {
-                "default": "anthropic/claude-opus-4.6",
+                "default": "anthropic/claude-sonnet-4.6",
                 "provider": "openrouter",
                 "context_length": 200000,
             }
         }
         result = _normalize_config_for_web(cfg)
-        assert result["model"] == "anthropic/claude-opus-4.6"
+        assert result["model"] == "anthropic/claude-sonnet-4.6"
         assert result["model_context_length"] == 200000
 
     def test_normalize_bare_string_model_yields_zero(self):
@@ -1094,11 +1094,11 @@ class TestModelContextLength:
 
         # Set up disk config with model as a dict
         save_config({
-            "model": {"default": "anthropic/claude-opus-4.6", "provider": "openrouter"}
+            "model": {"default": "anthropic/claude-sonnet-4.6", "provider": "openrouter"}
         })
 
         result = _denormalize_config_from_web({
-            "model": "anthropic/claude-opus-4.6",
+            "model": "anthropic/claude-sonnet-4.6",
             "model_context_length": 100000,
         })
         assert isinstance(result["model"], dict)
@@ -1112,14 +1112,14 @@ class TestModelContextLength:
 
         save_config({
             "model": {
-                "default": "anthropic/claude-opus-4.6",
+                "default": "anthropic/claude-sonnet-4.6",
                 "provider": "openrouter",
                 "context_length": 50000,
             }
         })
 
         result = _denormalize_config_from_web({
-            "model": "anthropic/claude-opus-4.6",
+            "model": "anthropic/claude-sonnet-4.6",
             "model_context_length": 0,
         })
         assert isinstance(result["model"], dict)
@@ -1220,7 +1220,7 @@ class TestModelInfoEndpoint:
 
         monkeypatch.setattr(ws, "load_config", lambda: {
             "model": {
-                "default": "anthropic/claude-opus-4.6",
+                "default": "anthropic/claude-sonnet-4.6",
                 "provider": "openrouter",
                 "context_length": 100000,
             }
@@ -1230,7 +1230,7 @@ class TestModelInfoEndpoint:
             resp = self.client.get("/api/model/info")
 
         data = resp.json()
-        assert data["model"] == "anthropic/claude-opus-4.6"
+        assert data["model"] == "anthropic/claude-sonnet-4.6"
         assert data["provider"] == "openrouter"
         assert data["auto_context_length"] == 200000
         assert data["config_context_length"] == 100000
@@ -1240,7 +1240,7 @@ class TestModelInfoEndpoint:
         import hermes_cli.web_server as ws
 
         monkeypatch.setattr(ws, "load_config", lambda: {
-            "model": {"default": "anthropic/claude-opus-4.6", "provider": "openrouter"}
+            "model": {"default": "anthropic/claude-sonnet-4.6", "provider": "openrouter"}
         })
 
         with patch("agent.model_metadata.get_model_context_length", return_value=200000):
@@ -1281,7 +1281,7 @@ class TestModelInfoEndpoint:
         import hermes_cli.web_server as ws
 
         monkeypatch.setattr(ws, "load_config", lambda: {
-            "model": {"default": "anthropic/claude-opus-4.6", "provider": "openrouter"}
+            "model": {"default": "anthropic/claude-sonnet-4.6", "provider": "openrouter"}
         })
 
         mock_caps = MagicMock()

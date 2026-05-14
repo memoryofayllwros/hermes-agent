@@ -231,14 +231,14 @@ def test_model_command_uses_existing_codex_session_without_relogin(monkeypatch):
 # ── Tests for _normalize_model_for_provider ──────────────────────────
 
 
-def _make_cli(model="anthropic/claude-opus-4.6", **kwargs):
+def _make_cli(model="anthropic/claude-sonnet-4.6", **kwargs):
     """Create a HermesCLI with minimal mocking."""
     import cli as _cli_mod
     from cli import HermesCLI
 
     _clean_config = {
         "model": {
-            "default": "anthropic/claude-opus-4.6",
+            "default": "anthropic/claude-sonnet-4.6",
             "base_url": "https://openrouter.ai/api/v1",
             "provider": "auto",
         },
@@ -306,9 +306,9 @@ class TestNormalizeModelForProvider:
         assert cli.model == "gpt-5.4"
 
     def test_any_provider_prefix_stripped(self):
-        """anthropic/claude-opus-4.6 → claude-opus-4.6 (strip prefix only).
+        """anthropic/claude-sonnet-4.6 → claude-opus-4.6 (strip prefix only).
         User explicitly chose this — let the API decide if it works."""
-        cli = _make_cli(model="anthropic/claude-opus-4.6")
+        cli = _make_cli(model="anthropic/claude-sonnet-4.6")
         changed = cli._normalize_model_for_provider("openai-codex")
         assert changed is True
         assert cli.model == "claude-opus-4.6"

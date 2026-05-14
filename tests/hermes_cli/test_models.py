@@ -12,7 +12,7 @@ from hermes_cli.models import (
 import hermes_cli.models as _models_mod
 
 LIVE_OPENROUTER_MODELS = [
-    ("anthropic/claude-opus-4.6", "recommended"),
+    ("anthropic/claude-sonnet-4.6", "recommended"),
     ("qwen/qwen3.6-plus", ""),
     ("nvidia/nemotron-3-super-120b-a12b:free", "free"),
 ]
@@ -70,14 +70,14 @@ class TestFetchOpenRouterModels:
                 return False
 
             def read(self):
-                return b'{"data":[{"id":"anthropic/claude-opus-4.6","pricing":{"prompt":"0.000015","completion":"0.000075"}},{"id":"qwen/qwen3.6-plus","pricing":{"prompt":"0.000000325","completion":"0.00000195"}},{"id":"nvidia/nemotron-3-super-120b-a12b:free","pricing":{"prompt":"0","completion":"0"}}]}'
+                return b'{"data":[{"id":"anthropic/claude-sonnet-4.6","pricing":{"prompt":"0.000015","completion":"0.000075"}},{"id":"qwen/qwen3.6-plus","pricing":{"prompt":"0.000000325","completion":"0.00000195"}},{"id":"nvidia/nemotron-3-super-120b-a12b:free","pricing":{"prompt":"0","completion":"0"}}]}'
 
         monkeypatch.setattr(_models_mod, "_openrouter_catalog_cache", None)
         with patch("hermes_cli.models.urllib.request.urlopen", return_value=_Resp()):
             models = fetch_openrouter_models(force_refresh=True)
 
         assert models == [
-            ("anthropic/claude-opus-4.6", "recommended"),
+            ("anthropic/claude-sonnet-4.6", "recommended"),
             ("qwen/qwen3.6-plus", ""),
             ("nvidia/nemotron-3-super-120b-a12b:free", "free"),
         ]
@@ -109,7 +109,7 @@ class TestFetchOpenRouterModels:
                 # qwen3.6-plus advertises tools → kept
                 return (
                     b'{"data":['
-                    b'{"id":"anthropic/claude-opus-4.6","pricing":{"prompt":"0.000015","completion":"0.000075"},'
+                    b'{"id":"anthropic/claude-sonnet-4.6","pricing":{"prompt":"0.000015","completion":"0.000075"},'
                     b'"supported_parameters":["temperature","tools","tool_choice"]},'
                     b'{"id":"google/gemini-3-pro-image-preview","pricing":{"prompt":"0.00001","completion":"0.00003"},'
                     b'"supported_parameters":["temperature","response_format"]},'
@@ -123,7 +123,7 @@ class TestFetchOpenRouterModels:
             _models_mod,
             "OPENROUTER_MODELS",
             [
-                ("anthropic/claude-opus-4.6", ""),
+                ("anthropic/claude-sonnet-4.6", ""),
                 ("google/gemini-3-pro-image-preview", ""),
                 ("qwen/qwen3.6-plus", ""),
             ],
@@ -133,7 +133,7 @@ class TestFetchOpenRouterModels:
             models = fetch_openrouter_models(force_refresh=True)
 
         ids = [mid for mid, _ in models]
-        assert "anthropic/claude-opus-4.6" in ids
+        assert "anthropic/claude-sonnet-4.6" in ids
         assert "qwen/qwen3.6-plus" in ids
         # Image-only model advertised supported_parameters WITHOUT tools → must be dropped.
         assert "google/gemini-3-pro-image-preview" not in ids
@@ -157,7 +157,7 @@ class TestFetchOpenRouterModels:
                 # No supported_parameters field at all on either entry.
                 return (
                     b'{"data":['
-                    b'{"id":"anthropic/claude-opus-4.6","pricing":{"prompt":"0.000015","completion":"0.000075"}},'
+                    b'{"id":"anthropic/claude-sonnet-4.6","pricing":{"prompt":"0.000015","completion":"0.000075"}},'
                     b'{"id":"qwen/qwen3.6-plus","pricing":{"prompt":"0.000000325","completion":"0.00000195"}}'
                     b']}'
                 )
@@ -167,7 +167,7 @@ class TestFetchOpenRouterModels:
             models = fetch_openrouter_models(force_refresh=True)
 
         ids = [mid for mid, _ in models]
-        assert "anthropic/claude-opus-4.6" in ids
+        assert "anthropic/claude-sonnet-4.6" in ids
         assert "qwen/qwen3.6-plus" in ids
 
 
@@ -205,7 +205,7 @@ class TestOpenRouterToolSupportHelper:
     def test_non_dict_item_is_permissive(self):
         from hermes_cli.models import _openrouter_model_supports_tools
         assert _openrouter_model_supports_tools(None) is True
-        assert _openrouter_model_supports_tools("anthropic/claude-opus-4.6") is True
+        assert _openrouter_model_supports_tools("anthropic/claude-sonnet-4.6") is True
 
     def test_empty_supported_parameters_list_drops_model(self):
         """Explicit empty list → no tools → drop."""
@@ -219,18 +219,18 @@ class TestFindOpenrouterSlug:
     def test_exact_match(self):
         from hermes_cli.models import _find_openrouter_slug
         with patch("hermes_cli.models.fetch_openrouter_models", return_value=LIVE_OPENROUTER_MODELS):
-            assert _find_openrouter_slug("anthropic/claude-opus-4.6") == "anthropic/claude-opus-4.6"
+            assert _find_openrouter_slug("anthropic/claude-sonnet-4.6") == "anthropic/claude-sonnet-4.6"
 
     def test_bare_name_match(self):
         from hermes_cli.models import _find_openrouter_slug
         with patch("hermes_cli.models.fetch_openrouter_models", return_value=LIVE_OPENROUTER_MODELS):
             result = _find_openrouter_slug("claude-opus-4.6")
-        assert result == "anthropic/claude-opus-4.6"
+        assert result == "anthropic/claude-sonnet-4.6"
 
     def test_case_insensitive(self):
         from hermes_cli.models import _find_openrouter_slug
         with patch("hermes_cli.models.fetch_openrouter_models", return_value=LIVE_OPENROUTER_MODELS):
-            result = _find_openrouter_slug("Anthropic/Claude-Opus-4.6")
+            result = _find_openrouter_slug("anthropic/claude-sonnet-4.6")
         assert result is not None
 
     def test_unknown_returns_none(self):
@@ -272,10 +272,10 @@ class TestDetectProviderForModel:
     def test_openrouter_slug_match(self):
         """Models in the OpenRouter catalog should be found."""
         with patch("hermes_cli.models.fetch_openrouter_models", return_value=LIVE_OPENROUTER_MODELS):
-            result = detect_provider_for_model("anthropic/claude-opus-4.6", "openai-codex")
+            result = detect_provider_for_model("anthropic/claude-sonnet-4.6", "openai-codex")
         assert result is not None
         assert result[0] == "openrouter"
-        assert result[1] == "anthropic/claude-opus-4.6"
+        assert result[1] == "anthropic/claude-sonnet-4.6"
 
     def test_bare_name_gets_openrouter_slug(self, monkeypatch):
         for env_var in (
@@ -290,7 +290,7 @@ class TestDetectProviderForModel:
             result = detect_provider_for_model("claude-opus-4.6", "openai-codex")
         assert result is not None
         # Should find it on OpenRouter with full slug
-        assert result[1] == "anthropic/claude-opus-4.6"
+        assert result[1] == "anthropic/claude-sonnet-4.6"
 
     def test_unknown_model_returns_none(self):
         """Completely unknown model names should return None."""
@@ -343,27 +343,27 @@ class TestPartitionNousModelsByTier:
 
     def test_paid_tier_all_selectable(self):
         """Paid users get all models as selectable, none unavailable."""
-        models = ["anthropic/claude-opus-4.6", "xiaomi/mimo-v2-pro"]
-        pricing = {"anthropic/claude-opus-4.6": self._PAID, "xiaomi/mimo-v2-pro": self._FREE}
+        models = ["anthropic/claude-sonnet-4.6", "xiaomi/mimo-v2-pro"]
+        pricing = {"anthropic/claude-sonnet-4.6": self._PAID, "xiaomi/mimo-v2-pro": self._FREE}
         sel, unav = partition_nous_models_by_tier(models, pricing, free_tier=False)
         assert sel == models
         assert unav == []
 
     def test_free_tier_splits_correctly(self):
         """Free users see only free models; paid ones are unavailable."""
-        models = ["anthropic/claude-opus-4.6", "xiaomi/mimo-v2-pro", "openai/gpt-5.4"]
+        models = ["anthropic/claude-sonnet-4.6", "xiaomi/mimo-v2-pro", "openai/gpt-5.4"]
         pricing = {
-            "anthropic/claude-opus-4.6": self._PAID,
+            "anthropic/claude-sonnet-4.6": self._PAID,
             "xiaomi/mimo-v2-pro": self._FREE,
             "openai/gpt-5.4": self._PAID,
         }
         sel, unav = partition_nous_models_by_tier(models, pricing, free_tier=True)
         assert sel == ["xiaomi/mimo-v2-pro"]
-        assert unav == ["anthropic/claude-opus-4.6", "openai/gpt-5.4"]
+        assert unav == ["anthropic/claude-sonnet-4.6", "openai/gpt-5.4"]
 
     def test_no_pricing_returns_all(self):
         """Without pricing data, all models are selectable."""
-        models = ["anthropic/claude-opus-4.6", "openai/gpt-5.4"]
+        models = ["anthropic/claude-sonnet-4.6", "openai/gpt-5.4"]
         sel, unav = partition_nous_models_by_tier(models, {}, free_tier=True)
         assert sel == models
         assert unav == []
@@ -378,7 +378,7 @@ class TestPartitionNousModelsByTier:
 
     def test_all_paid_models(self):
         """When all models are paid, free-tier users have none selectable."""
-        models = ["anthropic/claude-opus-4.6", "openai/gpt-5.4"]
+        models = ["anthropic/claude-sonnet-4.6", "openai/gpt-5.4"]
         pricing = {m: self._PAID for m in models}
         sel, unav = partition_nous_models_by_tier(models, pricing, free_tier=True)
         assert sel == []
@@ -406,8 +406,8 @@ class TestUnionWithPortalFreeRecommendations:
 
     def test_adds_portal_free_model_missing_from_curated(self):
         """A Portal-advertised free model not in curated is prepended + priced free."""
-        curated = ["anthropic/claude-opus-4.6"]
-        pricing = {"anthropic/claude-opus-4.6": self._PAID}
+        curated = ["anthropic/claude-sonnet-4.6"]
+        pricing = {"anthropic/claude-sonnet-4.6": self._PAID}
         with patch(
             "hermes_cli.models.fetch_nous_recommended_models",
             return_value=self._payload(["qwen/qwen3.6-plus"]),
@@ -415,18 +415,18 @@ class TestUnionWithPortalFreeRecommendations:
             ids, p = union_with_portal_free_recommendations(curated, pricing, "")
 
         assert ids[0] == "qwen/qwen3.6-plus"  # prepended
-        assert "anthropic/claude-opus-4.6" in ids
+        assert "anthropic/claude-sonnet-4.6" in ids
         # Synthetic free pricing entry created
         assert p["qwen/qwen3.6-plus"] == self._FREE
         # Existing pricing untouched
-        assert p["anthropic/claude-opus-4.6"] == self._PAID
+        assert p["anthropic/claude-sonnet-4.6"] == self._PAID
 
     def test_does_not_duplicate_curated_entries(self):
         """A Portal free model already in curated is not duplicated."""
-        curated = ["qwen/qwen3.6-plus", "anthropic/claude-opus-4.6"]
+        curated = ["qwen/qwen3.6-plus", "anthropic/claude-sonnet-4.6"]
         pricing = {
             "qwen/qwen3.6-plus": self._FREE,
-            "anthropic/claude-opus-4.6": self._PAID,
+            "anthropic/claude-sonnet-4.6": self._PAID,
         }
         with patch(
             "hermes_cli.models.fetch_nous_recommended_models",
@@ -443,8 +443,8 @@ class TestUnionWithPortalFreeRecommendations:
         # contains qwen/qwen3.6-plus (because new builds shipped it) but
         # live pricing endpoint hasn't published its zero-cost entry yet.
         # The Portal's freeRecommendedModels still flags it as free.
-        curated = ["qwen/qwen3.6-plus", "anthropic/claude-opus-4.6"]
-        pricing = {"anthropic/claude-opus-4.6": self._PAID}  # qwen missing!
+        curated = ["qwen/qwen3.6-plus", "anthropic/claude-sonnet-4.6"]
+        pricing = {"anthropic/claude-sonnet-4.6": self._PAID}  # qwen missing!
         with patch(
             "hermes_cli.models.fetch_nous_recommended_models",
             return_value=self._payload(["qwen/qwen3.6-plus"]),
@@ -452,7 +452,7 @@ class TestUnionWithPortalFreeRecommendations:
             ids, p = union_with_portal_free_recommendations(curated, pricing, "")
         sel, unav = partition_nous_models_by_tier(ids, p, free_tier=True)
         assert "qwen/qwen3.6-plus" in sel
-        assert "anthropic/claude-opus-4.6" in unav
+        assert "anthropic/claude-sonnet-4.6" in unav
 
     def test_empty_payload_returns_inputs_unchanged(self):
         """Empty Portal response leaves curated + pricing untouched."""
@@ -530,8 +530,8 @@ class TestUnionWithPortalPaidRecommendations:
 
     def test_adds_portal_paid_model_missing_from_curated(self):
         """A Portal-advertised paid model not in curated is prepended."""
-        curated = ["anthropic/claude-opus-4.6"]
-        pricing = {"anthropic/claude-opus-4.6": self._PAID}
+        curated = ["anthropic/claude-sonnet-4.6"]
+        pricing = {"anthropic/claude-sonnet-4.6": self._PAID}
         with patch(
             "hermes_cli.models.fetch_nous_recommended_models",
             return_value=self._payload(["openai/gpt-5.4"]),
@@ -539,9 +539,9 @@ class TestUnionWithPortalPaidRecommendations:
             ids, p = union_with_portal_paid_recommendations(curated, pricing, "")
 
         assert ids[0] == "openai/gpt-5.4"  # prepended
-        assert "anthropic/claude-opus-4.6" in ids
+        assert "anthropic/claude-sonnet-4.6" in ids
         # Existing pricing untouched
-        assert p["anthropic/claude-opus-4.6"] == self._PAID
+        assert p["anthropic/claude-sonnet-4.6"] == self._PAID
 
     def test_does_not_synthesize_pricing_for_paid_models(self):
         """Paid recommendations missing from live pricing get no synthetic entry.
@@ -552,8 +552,8 @@ class TestUnionWithPortalPaidRecommendations:
         right thing is to leave pricing absent so the picker shows a blank
         column until the live pricing endpoint catches up.
         """
-        curated = ["anthropic/claude-opus-4.6"]
-        pricing = {"anthropic/claude-opus-4.6": self._PAID}
+        curated = ["anthropic/claude-sonnet-4.6"]
+        pricing = {"anthropic/claude-sonnet-4.6": self._PAID}
         with patch(
             "hermes_cli.models.fetch_nous_recommended_models",
             return_value=self._payload(["openai/gpt-5.4"]),
@@ -561,14 +561,14 @@ class TestUnionWithPortalPaidRecommendations:
             _, p = union_with_portal_paid_recommendations(curated, pricing, "")
 
         assert "openai/gpt-5.4" not in p
-        assert p["anthropic/claude-opus-4.6"] == self._PAID
+        assert p["anthropic/claude-sonnet-4.6"] == self._PAID
 
     def test_does_not_duplicate_curated_entries(self):
         """A Portal paid model already in curated is not duplicated."""
-        curated = ["openai/gpt-5.4", "anthropic/claude-opus-4.6"]
+        curated = ["openai/gpt-5.4", "anthropic/claude-sonnet-4.6"]
         pricing = {
             "openai/gpt-5.4": self._PAID,
-            "anthropic/claude-opus-4.6": self._PAID,
+            "anthropic/claude-sonnet-4.6": self._PAID,
         }
         with patch(
             "hermes_cli.models.fetch_nous_recommended_models",
@@ -634,8 +634,8 @@ class TestUnionWithPortalPaidRecommendations:
 
     def test_preserves_relative_order_of_new_paid_models(self):
         """Multiple new paid models are prepended in payload order."""
-        curated = ["anthropic/claude-opus-4.6"]
-        pricing = {"anthropic/claude-opus-4.6": self._PAID}
+        curated = ["anthropic/claude-sonnet-4.6"]
+        pricing = {"anthropic/claude-sonnet-4.6": self._PAID}
         with patch(
             "hermes_cli.models.fetch_nous_recommended_models",
             return_value=self._payload(["openai/gpt-5.4", "openai/gpt-5.5"]),
@@ -644,7 +644,7 @@ class TestUnionWithPortalPaidRecommendations:
         assert ids == [
             "openai/gpt-5.4",
             "openai/gpt-5.5",
-            "anthropic/claude-opus-4.6",
+            "anthropic/claude-sonnet-4.6",
         ]
 
 

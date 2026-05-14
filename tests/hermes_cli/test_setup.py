@@ -99,7 +99,7 @@ def test_setup_syncs_openrouter_from_disk(tmp_path, monkeypatch):
     assert isinstance(config.get("model"), str)  # fresh install
 
     def fake_select():
-        _write_model_config(tmp_path, "openrouter", model_name="anthropic/claude-opus-4.6")
+        _write_model_config(tmp_path, "openrouter", model_name="anthropic/claude-sonnet-4.6")
 
     monkeypatch.setattr("hermes_cli.main.select_provider_and_model", fake_select)
 
@@ -249,7 +249,7 @@ def test_setup_syncs_custom_provider_removal_from_disk(tmp_path, monkeypatch):
 
     def fake_select():
         cfg = load_config()
-        cfg["model"] = {"provider": "openrouter", "default": "anthropic/claude-opus-4.6"}
+        cfg["model"] = {"provider": "openrouter", "default": "anthropic/claude-sonnet-4.6"}
         cfg["custom_providers"] = []
         save_config(cfg)
 

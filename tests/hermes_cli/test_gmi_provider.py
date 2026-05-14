@@ -249,7 +249,7 @@ class TestGmiModelMetadata:
             return_value=None,
         ), patch(
             "agent.model_metadata.fetch_endpoint_model_metadata",
-            return_value={"anthropic/claude-opus-4.6": {"context_length": 409600}},
+            return_value={"anthropic/claude-sonnet-4.6": {"context_length": 409600}},
         ), patch(
             "agent.models_dev.lookup_models_dev_context",
             return_value=None,
@@ -258,7 +258,7 @@ class TestGmiModelMetadata:
             return_value={},
         ):
             result = get_model_context_length(
-                "anthropic/claude-opus-4.6",
+                "anthropic/claude-sonnet-4.6",
                 base_url="https://api.gmi-serving.com/v1",
                 api_key="gmi-test-key",
                 provider="custom",

@@ -28,8 +28,8 @@ def _patch_info(tmp_path, config_yaml, model, runtime):
 class TestFormatSessionInfo:
 
     def test_includes_model_name(self, runner, tmp_path):
-        p1, p2, p3 = _patch_info(tmp_path, "model:\n  default: anthropic/claude-opus-4.6\n  provider: openrouter\n",
-                                  "anthropic/claude-opus-4.6",
+        p1, p2, p3 = _patch_info(tmp_path, "model:\n  default: anthropic/claude-sonnet-4.6\n  provider: openrouter\n",
+                                  "anthropic/claude-sonnet-4.6",
                                   {"provider": "openrouter", "base_url": "https://openrouter.ai/api/v1", "api_key": "k"})
         with p1, p2, p3:
             info = runner._format_session_info()

@@ -139,7 +139,7 @@ class TestPriorityProcessingModels(unittest.TestCase):
         # Supported: Opus 4.6 in any form
         supported = [
             "claude-opus-4-6", "claude-opus-4.6",
-            "anthropic/claude-opus-4-6", "anthropic/claude-opus-4.6",
+            "anthropic/claude-opus-4-6", "anthropic/claude-sonnet-4.6",
         ]
         for model in supported:
             assert model_supports_fast_mode(model), f"{model} should support fast mode"
@@ -272,7 +272,7 @@ class TestAnthropicFastMode(unittest.TestCase):
         assert model_supports_fast_mode("claude-opus-4.6") is True
         # With vendor prefix
         assert model_supports_fast_mode("anthropic/claude-opus-4-6") is True
-        assert model_supports_fast_mode("anthropic/claude-opus-4.6") is True
+        assert model_supports_fast_mode("anthropic/claude-sonnet-4.6") is True
 
     def test_anthropic_non_opus46_models_excluded(self):
         """Anthropic restricts fast mode to Opus 4.6 — others must be excluded.
@@ -310,7 +310,7 @@ class TestAnthropicFastMode(unittest.TestCase):
         result = resolve_fast_mode_overrides("claude-opus-4-6")
         assert result == {"speed": "fast"}
 
-        result = resolve_fast_mode_overrides("anthropic/claude-opus-4.6")
+        result = resolve_fast_mode_overrides("anthropic/claude-sonnet-4.6")
         assert result == {"speed": "fast"}
 
     def test_resolve_overrides_returns_none_for_unsupported_claude(self):

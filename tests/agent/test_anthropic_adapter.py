@@ -510,7 +510,7 @@ class TestNormalizeModelName:
 
     def test_converts_dots_to_hyphens(self):
         """OpenRouter uses dots (4.6), Anthropic uses hyphens (4-6)."""
-        assert normalize_model_name("anthropic/claude-opus-4.6") == "claude-opus-4-6"
+        assert normalize_model_name("anthropic/claude-sonnet-4.6") == "claude-opus-4-6"
         assert normalize_model_name("anthropic/claude-sonnet-4.5") == "claude-sonnet-4-5"
         assert normalize_model_name("claude-opus-4.6") == "claude-opus-4-6"
 

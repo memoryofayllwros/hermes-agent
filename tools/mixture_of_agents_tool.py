@@ -62,7 +62,7 @@ logger = logging.getLogger(__name__)
 # Reference models - these generate diverse initial responses in parallel.
 # Keep this list aligned with current top-tier OpenRouter frontier options.
 REFERENCE_MODELS = [
-    "anthropic/claude-opus-4.6",
+    "anthropic/claude-sonnet-4.6",
     "google/gemini-2.5-pro",
     "openai/gpt-5.4-pro",
     "deepseek/deepseek-v3.2",
@@ -70,7 +70,7 @@ REFERENCE_MODELS = [
 
 # Aggregator model - synthesizes reference responses into final output.
 # Prefer the strongest synthesis model in the current OpenRouter lineup.
-AGGREGATOR_MODEL = "anthropic/claude-opus-4.6"
+AGGREGATOR_MODEL = "anthropic/claude-sonnet-4.6"
 
 # Temperature settings optimized for MoA performance
 REFERENCE_TEMPERATURE = 0.6  # Balanced creativity for diverse perspectives

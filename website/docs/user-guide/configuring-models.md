@@ -179,7 +179,7 @@ model_aliases:
 Or from the shell (short form, `provider/model`):
 
 ```bash
-hermes config set model.aliases.fav anthropic/claude-opus-4.6
+hermes config set model.aliases.fav anthropic/claude-sonnet-4.6
 hermes config set model.aliases.grok x-ai/grok-4
 ```
 

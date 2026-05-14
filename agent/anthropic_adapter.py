@@ -133,7 +133,7 @@ def _get_anthropic_max_output(model: str) -> int:
     matching before "claude-3-5-sonnet".
 
     Normalizes dots to hyphens so that model names like
-    ``anthropic/claude-opus-4.6`` match the ``claude-opus-4-6`` table key.
+    ``anthropic/claude-sonnet-4.6`` match the ``claude-opus-4-6`` table key.
     """
     m = model.lower().replace(".", "-")
     best_key = ""

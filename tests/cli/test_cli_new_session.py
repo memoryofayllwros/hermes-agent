@@ -27,7 +27,7 @@ class _FakeAgent:
     def __init__(self, session_id: str, session_start):
         self.session_id = session_id
         self.session_start = session_start
-        self.model = "anthropic/claude-opus-4.6"
+        self.model = "anthropic/claude-sonnet-4.6"
         self._last_flushed_db_idx = 7
         self._todo_store = TodoStore()
         self._todo_store.write(
@@ -77,7 +77,7 @@ def _make_cli(env_overrides=None, config_overrides=None, **kwargs):
     """Create a HermesCLI instance with minimal mocking."""
     _clean_config = {
         "model": {
-            "default": "anthropic/claude-opus-4.6",
+            "default": "anthropic/claude-sonnet-4.6",
             "base_url": "https://openrouter.ai/api/v1",
             "provider": "auto",
         },

@@ -249,7 +249,7 @@ Run `nix build .#configKeys && cat result` to see every leaf config key extracte
     settings = {
       model = {
         base_url = "https://openrouter.ai/api/v1";
-        default = "anthropic/claude-opus-4.6";
+        default = "anthropic/claude-sonnet-4.6";
       };
       toolsets = [ "all" ];
       max_turns = 100;

@@ -416,7 +416,7 @@ class TestLoginNousSkipKeepsCurrent:
 
     Regression: previously, _update_config_for_provider was called
     unconditionally after login, which flipped model.provider to "nous" while
-    keeping the old model.default (e.g. anthropic/claude-opus-4.6 from
+    keeping the old model.default (e.g. anthropic/claude-sonnet-4.6 from
     OpenRouter), leaving the user with a mismatched provider/model pair.
     """
 
@@ -430,7 +430,7 @@ class TestLoginNousSkipKeepsCurrent:
         config_path.write_text(yaml.safe_dump({
             "model": {
                 "provider": "openrouter",
-                "default": "anthropic/claude-opus-4.6",
+                "default": "anthropic/claude-sonnet-4.6",
             },
         }, sort_keys=False))
 
@@ -492,7 +492,7 @@ class TestLoginNousSkipKeepsCurrent:
         # config.yaml model section must be unchanged
         cfg_after = yaml.safe_load(config_path.read_text())
         assert cfg_after["model"]["provider"] == "openrouter"
-        assert cfg_after["model"]["default"] == "anthropic/claude-opus-4.6"
+        assert cfg_after["model"]["default"] == "anthropic/claude-sonnet-4.6"
         assert "base_url" not in cfg_after["model"]
 
         # auth.json: active_provider restored to openrouter, but Nous creds saved

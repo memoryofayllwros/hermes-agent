@@ -110,7 +110,7 @@ def test_openrouter_models_api_pricing_is_converted_from_per_token_to_per_millio
     monkeypatch.setattr(
         "agent.usage_pricing.fetch_model_metadata",
         lambda: {
-            "anthropic/claude-opus-4.6": {
+            "anthropic/claude-sonnet-4.6": {
                 "pricing": {
                     "prompt": "0.000005",
                     "completion": "0.000025",
@@ -122,7 +122,7 @@ def test_openrouter_models_api_pricing_is_converted_from_per_token_to_per_millio
     )
 
     entry = get_pricing_entry(
-        "anthropic/claude-opus-4.6",
+        "anthropic/claude-sonnet-4.6",
         provider="openrouter",
         base_url="https://openrouter.ai/api/v1",
     )

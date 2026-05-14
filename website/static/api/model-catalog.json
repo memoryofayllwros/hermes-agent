@@ -17,7 +17,7 @@
           "description": ""
         },
         {
-          "id": "anthropic/claude-opus-4.6",
+          "id": "anthropic/claude-sonnet-4.6",
           "description": ""
         },
         {
@@ -148,7 +148,7 @@
           "id": "anthropic/claude-opus-4.7"
         },
         {
-          "id": "anthropic/claude-opus-4.6"
+          "id": "anthropic/claude-sonnet-4.6"
         },
         {
           "id": "anthropic/claude-sonnet-4.6"

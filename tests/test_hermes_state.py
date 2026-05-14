@@ -123,11 +123,11 @@ class TestSessionLifecycle:
         assert session["model"] == "openai/gpt-5.4"
 
     def test_update_token_counts_preserves_existing_model(self, db):
-        db.create_session(session_id="s1", source="cli", model="anthropic/claude-opus-4.6")
+        db.create_session(session_id="s1", source="cli", model="anthropic/claude-sonnet-4.6")
         db.update_token_counts("s1", input_tokens=10, output_tokens=5, model="openai/gpt-5.4")
 
         session = db.get_session("s1")
-        assert session["model"] == "anthropic/claude-opus-4.6"
+        assert session["model"] == "anthropic/claude-sonnet-4.6"
 
     def test_parent_session(self, db):
         db.create_session(session_id="parent", source="cli")

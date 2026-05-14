@@ -25,7 +25,7 @@ from hermes_cli.models import (
 # -- helpers -----------------------------------------------------------------
 
 FAKE_API_MODELS = [
-    "anthropic/claude-opus-4.6",
+    "anthropic/claude-sonnet-4.6",
     "anthropic/claude-sonnet-4.5",
     "openai/gpt-5.4-pro",
     "openai/gpt-5.4",
@@ -134,7 +134,7 @@ class TestCuratedModelsForProvider:
         with patch(
             "hermes_cli.models.fetch_openrouter_models",
             return_value=[
-                ("anthropic/claude-opus-4.6", "recommended"),
+                ("anthropic/claude-sonnet-4.6", "recommended"),
                 ("qwen/qwen3.6-plus", ""),
             ],
         ):
@@ -188,7 +188,7 @@ class TestProviderModelIds:
         with patch(
             "hermes_cli.models.fetch_openrouter_models",
             return_value=[
-                ("anthropic/claude-opus-4.6", "recommended"),
+                ("anthropic/claude-sonnet-4.6", "recommended"),
                 ("qwen/qwen3.6-plus", ""),
             ],
         ):
@@ -511,7 +511,7 @@ class TestValidateFormatChecks:
 
 class TestValidateApiFound:
     def test_model_found_in_api(self):
-        result = _validate("anthropic/claude-opus-4.6")
+        result = _validate("anthropic/claude-sonnet-4.6")
         assert result["accepted"] is True
         assert result["persist"] is True
         assert result["recognized"] is True
@@ -545,7 +545,7 @@ class TestValidateApiNotFound:
         """When a very close match exists, validate returns corrected_model."""
         result = _validate("anthropic/claude-opus-4.5")
         assert result["accepted"] is True
-        assert result.get("corrected_model") == "anthropic/claude-opus-4.6"
+        assert result.get("corrected_model") == "anthropic/claude-sonnet-4.6"
         assert result["recognized"] is True
 
     def test_dissimilar_model_shows_suggestions_not_autocorrect(self):
@@ -578,9 +578,9 @@ class TestValidateApiFallback:
         # Force the openrouter catalog lookup to return a deterministic list.
         with patch(
             "hermes_cli.models.provider_model_ids",
-            return_value=["anthropic/claude-opus-4.6", "openai/gpt-5.4"],
+            return_value=["anthropic/claude-sonnet-4.6", "openai/gpt-5.4"],
         ):
-            result = _validate("anthropic/claude-opus-4.6", api_models=None)
+            result = _validate("anthropic/claude-sonnet-4.6", api_models=None)
         assert result["accepted"] is True
         assert result["persist"] is True
         assert result["recognized"] is True
@@ -588,7 +588,7 @@ class TestValidateApiFallback:
     def test_unknown_model_accepted_with_note_when_api_down(self):
         with patch(
             "hermes_cli.models.provider_model_ids",
-            return_value=["anthropic/claude-opus-4.6", "openai/gpt-5.4"],
+            return_value=["anthropic/claude-sonnet-4.6", "openai/gpt-5.4"],
         ):
             result = _validate("anthropic/claude-next-gen", api_models=None)
         assert result["accepted"] is True

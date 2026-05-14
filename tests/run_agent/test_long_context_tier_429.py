@@ -69,7 +69,7 @@ class TestLongContextTierDetection:
         assert not self._is_long_context_tier_error(
             429,
             "Extra usage is required for long context requests.",
-            model="anthropic/claude-opus-4.6",
+            model="anthropic/claude-sonnet-4.6",
         )
 
     def test_rejects_normal_429(self):

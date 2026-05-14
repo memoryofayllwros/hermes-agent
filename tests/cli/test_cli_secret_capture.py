@@ -125,7 +125,7 @@ def test_secret_capture_timeout_clears_hidden_input_buffer():
 def test_cli_chat_registers_secret_capture_callback():
     clean_config = {
         "model": {
-            "default": "anthropic/claude-opus-4.6",
+            "default": "anthropic/claude-sonnet-4.6",
             "base_url": "https://openrouter.ai/api/v1",
             "provider": "auto",
         },

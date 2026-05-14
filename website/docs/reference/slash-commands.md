@@ -152,7 +152,7 @@ model_aliases:
 **Short form** — `provider/model` in one string. Set from the shell without editing YAML:
 
 ```bash
-hermes config set model.aliases.fav anthropic/claude-opus-4.6
+hermes config set model.aliases.fav anthropic/claude-sonnet-4.6
 hermes config set model.aliases.grok x-ai/grok-4
 ```
 

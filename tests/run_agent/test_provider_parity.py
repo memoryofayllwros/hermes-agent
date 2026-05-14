@@ -217,7 +217,7 @@ class TestDeveloperRoleSwap:
         assert kwargs["messages"][1]["role"] == "user"
 
     @pytest.mark.parametrize("model", [
-        "anthropic/claude-opus-4.6",
+        "anthropic/claude-sonnet-4.6",
         "openai/gpt-4o",
         "google/gemini-2.5-pro",
         "deepseek/deepseek-chat",

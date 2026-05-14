@@ -515,7 +515,7 @@ python:           3.11.14
 openai_sdk:       2.24.0
 profile:          default
 hermes_home:      ~/.hermes
-model:            anthropic/claude-opus-4.6
+model:            anthropic/claude-sonnet-4.6
 provider:         openrouter
 terminal:         local
 

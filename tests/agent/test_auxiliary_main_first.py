@@ -59,19 +59,19 @@ class TestResolveAutoMainFirst:
             "agent.auxiliary_client._read_main_provider", return_value="nous",
         ), patch(
             "agent.auxiliary_client._read_main_model",
-            return_value="anthropic/claude-opus-4.6",
+            return_value="anthropic/claude-sonnet-4.6",
         ), patch(
             "agent.auxiliary_client.resolve_provider_client"
         ) as mock_resolve:
             mock_client = MagicMock()
-            mock_resolve.return_value = (mock_client, "anthropic/claude-opus-4.6")
+            mock_resolve.return_value = (mock_client, "anthropic/claude-sonnet-4.6")
 
             from agent.auxiliary_client import _resolve_auto
 
             client, model = _resolve_auto()
 
         assert client is mock_client
-        assert model == "anthropic/claude-opus-4.6"
+        assert model == "anthropic/claude-sonnet-4.6"
         assert mock_resolve.call_args.args[0] == "nous"
 
     def test_non_aggregator_main_still_uses_main(self, monkeypatch):
@@ -379,7 +379,7 @@ class TestResolveVisionMainFirst:
             "agent.auxiliary_client._read_main_provider", return_value="openrouter",
         ), patch(
             "agent.auxiliary_client._read_main_model",
-            return_value="anthropic/claude-opus-4.6",
+            return_value="anthropic/claude-sonnet-4.6",
         ), patch(
             "agent.auxiliary_client._resolve_task_provider_model",
             return_value=("nous", None, None, None, None),  # explicit override

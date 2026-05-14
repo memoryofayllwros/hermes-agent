@@ -68,7 +68,7 @@ ULTRAPLINIAN_MODELS = [
     'openai/gpt-5.2',
     'google/gemini-3-pro-preview',
     'google/gemini-3.1-pro-preview',
-    'anthropic/claude-opus-4.6',
+    'anthropic/claude-sonnet-4.6',
     'openai/gpt-oss-120b',
     'deepseek/deepseek-r1',
     'nvidia/nemotron-3-super-120b-a12b',

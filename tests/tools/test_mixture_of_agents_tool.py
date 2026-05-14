@@ -56,7 +56,7 @@ async def test_moa_top_level_error_logs_single_traceback_on_aggregator_failure(m
     monkeypatch.setattr(
         moa,
         "_run_reference_model_safe",
-        AsyncMock(return_value=("anthropic/claude-opus-4.6", "ok", True)),
+        AsyncMock(return_value=("anthropic/claude-sonnet-4.6", "ok", True)),
     )
     monkeypatch.setattr(
         moa,
@@ -75,7 +75,7 @@ async def test_moa_top_level_error_logs_single_traceback_on_aggregator_failure(m
     result = json.loads(
         await moa.mixture_of_agents_tool(
             "solve this",
-            reference_models=["anthropic/claude-opus-4.6"],
+            reference_models=["anthropic/claude-sonnet-4.6"],
         )
     )
 

@@ -461,11 +461,11 @@ class TestCodexOAuthContextLength:
         base_url = "https://openrouter.ai/api/v1"
         import yaml as _yaml
         cache_file.write_text(_yaml.dump({"context_lengths": {
-            f"anthropic/claude-opus-4.6@{base_url}": 1_000_000,
+            f"anthropic/claude-sonnet-4.6@{base_url}": 1_000_000,
         }}))
 
         ctx = mm.get_model_context_length(
-            model="anthropic/claude-opus-4.6",
+            model="anthropic/claude-sonnet-4.6",
             base_url=base_url,
             api_key="fake",
             provider="openrouter",

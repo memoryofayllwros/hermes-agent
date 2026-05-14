@@ -38,7 +38,7 @@ class TestSupportsMediaInToolResults:
         assert _supports_media_in_tool_results("anthropic", "claude-opus-4-6") is True
 
     def test_openrouter_yes(self):
-        assert _supports_media_in_tool_results("openrouter", "anthropic/claude-opus-4.6") is True
+        assert _supports_media_in_tool_results("openrouter", "anthropic/claude-sonnet-4.6") is True
 
     def test_nous_yes(self):
         assert _supports_media_in_tool_results("nous", "anthropic/claude-sonnet-4.6") is True
@@ -155,7 +155,7 @@ class TestHandleVisionAnalyzeFastPath:
 
         # Set runtime override so the handler thinks we're on opus@openrouter
         from agent.auxiliary_client import set_runtime_main, clear_runtime_main
-        set_runtime_main("openrouter", "anthropic/claude-opus-4.6")
+        set_runtime_main("openrouter", "anthropic/claude-sonnet-4.6")
         try:
             # Mock decide_image_input_mode to always return "native" so the
             # fast path fires regardless of model-catalog state in CI.
@@ -201,7 +201,7 @@ class TestHandleVisionAnalyzeFastPath:
             return '{"sentinel": "aux-path"}'
 
         from agent.auxiliary_client import set_runtime_main, clear_runtime_main
-        set_runtime_main("brand-new-provider", "anthropic/claude-opus-4.6")
+        set_runtime_main("brand-new-provider", "anthropic/claude-sonnet-4.6")
         try:
             with patch("tools.vision_tools.vision_analyze_tool", side_effect=_aux_sentinel):
                 coro = _handle_vision_analyze({"image_url": str(img), "question": "?"})

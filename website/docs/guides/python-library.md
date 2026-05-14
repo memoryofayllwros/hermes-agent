@@ -311,7 +311,7 @@ print(review)
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `model` | `str` | `"anthropic/claude-opus-4.6"` | Model in OpenRouter format |
+| `model` | `str` | `"anthropic/claude-sonnet-4.6"` | Model in OpenRouter format |
 | `quiet_mode` | `bool` | `False` | Suppress CLI output |
 | `enabled_toolsets` | `List[str]` | `None` | Whitelist specific toolsets |
 | `disabled_toolsets` | `List[str]` | `None` | Blacklist specific toolsets |

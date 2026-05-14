@@ -20,7 +20,7 @@ def _make_cli(**kwargs):
     """Create a HermesCLI with prompt_toolkit stubs (same pattern as test_cli_init)."""
     _clean_config = {
         "model": {
-            "default": "anthropic/claude-opus-4.6",
+            "default": "anthropic/claude-sonnet-4.6",
             "base_url": "https://openrouter.ai/api/v1",
             "provider": "auto",
         },

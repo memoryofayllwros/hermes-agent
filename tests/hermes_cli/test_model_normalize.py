@@ -108,7 +108,7 @@ class TestCopilotModelNormalization:
 
     @pytest.mark.parametrize("model,expected", [
         # Vendor-prefixed Anthropic IDs — prefix must be stripped.
-        ("anthropic/claude-opus-4.6",   "claude-opus-4.6"),
+        ("anthropic/claude-sonnet-4.6",   "claude-opus-4.6"),
         ("anthropic/claude-sonnet-4.6", "claude-sonnet-4.6"),
         ("anthropic/claude-sonnet-4.5", "claude-sonnet-4.5"),
         ("anthropic/claude-haiku-4.5",  "claude-haiku-4.5"),

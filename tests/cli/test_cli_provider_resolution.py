@@ -232,7 +232,7 @@ def test_cli_prefers_config_provider_over_stale_env_override(monkeypatch):
 
 def test_codex_provider_replaces_incompatible_default_model(monkeypatch):
     """When provider resolves to openai-codex and no model was explicitly
-    chosen, the global config default (e.g. anthropic/claude-opus-4.6) must
+    chosen, the global config default (e.g. anthropic/claude-sonnet-4.6) must
     be replaced with a Codex-compatible model.  Fixes #651."""
     cli = _import_cli()
 

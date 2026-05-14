@@ -988,7 +988,7 @@ Direct API-key providers from the main provider catalog also work here when you 
 auxiliary:
   compression:
     provider: "gmi"
-    model: "anthropic/claude-opus-4.6"
+    model: "anthropic/claude-sonnet-4.6"
 ```
 
 For GMI auxiliary routing, use the exact model ID returned by GMI's `/v1/models` endpoint.

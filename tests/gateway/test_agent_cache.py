@@ -358,7 +358,7 @@ class TestAgentCacheLifecycle:
             runner._agent_cache[session_key] = (agent1, old_sig)
 
         # New model → different signature
-        new_sig = runner._agent_config_signature("anthropic/claude-opus-4.6", runtime, ["hermes-telegram"], "")
+        new_sig = runner._agent_config_signature("anthropic/claude-sonnet-4.6", runtime, ["hermes-telegram"], "")
         assert new_sig != old_sig
 
         with runner._agent_cache_lock:

@@ -120,7 +120,7 @@ def test_setup_same_provider_rotation_strategy_saved_for_multi_credential_pool(t
     save_env_value("OPENROUTER_API_KEY", "or-key")
 
     # Pre-write config so the pool step sees provider="openrouter"
-    _write_model_config("openrouter", "", "anthropic/claude-opus-4.6")
+    _write_model_config("openrouter", "", "anthropic/claude-sonnet-4.6")
 
     config = load_config()
 
@@ -174,7 +174,7 @@ def test_setup_same_provider_fallback_can_add_another_credential(tmp_path, monke
     save_env_value("OPENROUTER_API_KEY", "or-key")
 
     # Pre-write config so the pool step sees provider="openrouter"
-    _write_model_config("openrouter", "", "anthropic/claude-opus-4.6")
+    _write_model_config("openrouter", "", "anthropic/claude-sonnet-4.6")
 
     config = load_config()
     pool_sizes = iter([1, 2])
@@ -235,7 +235,7 @@ def test_setup_same_provider_single_credential_keeps_existing_rotation_strategy(
     _clear_provider_env(monkeypatch)
     save_env_value("OPENROUTER_API_KEY", "or-key")
 
-    _write_model_config("openrouter", "", "anthropic/claude-opus-4.6")
+    _write_model_config("openrouter", "", "anthropic/claude-sonnet-4.6")
 
     config = load_config()
     config["credential_pool_strategies"] = {"openrouter": "round_robin"}
@@ -269,7 +269,7 @@ def test_setup_pool_step_shows_manual_vs_auto_detected_counts(tmp_path, monkeypa
     save_env_value("OPENROUTER_API_KEY", "or-key")
 
     # Pre-write config so the pool step sees provider="openrouter"
-    _write_model_config("openrouter", "", "anthropic/claude-opus-4.6")
+    _write_model_config("openrouter", "", "anthropic/claude-sonnet-4.6")
 
     config = load_config()
 

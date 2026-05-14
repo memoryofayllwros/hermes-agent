@@ -1342,7 +1342,7 @@ def _resolve_nous_context_length(
 
     Nous model IDs are bare after prefix-stripping (e.g. 'qwen3.6-plus',
     'claude-opus-4-6') while OpenRouter uses prefixed IDs (e.g.
-    'qwen/qwen3.6-plus', 'anthropic/claude-opus-4.6').  Version
+    'qwen/qwen3.6-plus', 'anthropic/claude-sonnet-4.6').  Version
     normalization (dot↔dash) is applied to handle name drifts.
 
     Returns ``(context_length, source)`` where ``source`` is one of:
